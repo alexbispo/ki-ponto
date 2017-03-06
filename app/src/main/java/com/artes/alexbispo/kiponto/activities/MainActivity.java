@@ -17,9 +17,6 @@ import android.widget.TextView;
 import com.artes.alexbispo.kiponto.R;
 import com.artes.alexbispo.kiponto.model.Company;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity {
 
     private ListView listViewCompanies;
@@ -31,14 +28,14 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fabCompanyNew = (FloatingActionButton) findViewById(R.id.fab_company_new);
         listViewCompanies = (ListView) findViewById(R.id.list_companies);
         loadListViewCompanies();
 
-        fab.setOnClickListener(new View.OnClickListener() {
+        fabCompanyNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, CompaniesFormActivity.class);
+                Intent intent = new Intent(MainActivity.this, CompanyFormActivity.class);
                 startActivity(intent);
             }
         });
@@ -46,10 +43,10 @@ public class MainActivity extends AppCompatActivity {
         listViewCompanies.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                TextView textView = (TextView) view;
-                String mensagem = "Empresa selcionada: " + textView.getText();
-                Snackbar.make(view, mensagem, Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Company company = (Company) listViewCompanies.getItemAtPosition(position);
+                Intent intent = new Intent(MainActivity.this, CompanyShowActivity.class);
+                intent.putExtra("company_id", Long.valueOf(company.getId()));
+                startActivity(intent);
             }
         });
     }

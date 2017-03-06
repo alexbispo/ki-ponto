@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/company_show_cv_header"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="4dp"
+        app:cardBackgroundColor="@color/cardview_light_background"
+        app:cardElevation="@dimen/cardview_default_elevation">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/company_show_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Empresa: "
+                android:textColor="@android:color/primary_text_light"/>
+
+            <TextView
+                android:id="@+id/company_show_start_at"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Início em: "
+                android:textColor="@android:color/primary_text_light"/>
+
+            <TextView
+                android:id="@+id/company_show_leaving_at"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Até: "
+                android:textColor="@android:color/primary_text_light"/>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/company_show_cv_content"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="4dp"
+        app:cardBackgroundColor="@color/cardview_light_background"
+        app:cardElevation="@dimen/cardview_default_elevation">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/company_show_total_worked"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Total de horas trabalhadas: 546:43"
+                android:textColor="@android:color/secondary_text_light"/>
+
+            <TextView
+                android:id="@+id/company_show_balance"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Saldo: + 2:31"
+                android:textColor="@android:color/holo_green_dark"/>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/company_show_appointments"
+        android:text="Apontamentos"/>
+
+</LinearLayout>

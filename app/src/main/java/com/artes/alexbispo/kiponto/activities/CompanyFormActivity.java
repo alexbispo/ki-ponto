@@ -20,7 +20,7 @@ import java.util.HashMap;
 
 import static java.util.Calendar.*;
 
-public class CompaniesFormActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class CompanyFormActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     private Button btnStartDate;
     private Button btnLeavingDate;
@@ -46,7 +46,7 @@ public class CompaniesFormActivity extends AppCompatActivity implements DatePick
                 btnDatePickerId = view.getId();
 
                 DatePickerDialogFragment fragment = DatePickerDialogFragment.getInstance(
-                        CompaniesFormActivity.this, startAt.get(YEAR), startAt.get(MONTH),
+                        CompanyFormActivity.this, startAt.get(YEAR), startAt.get(MONTH),
                             startAt.get(DAY_OF_MONTH));
                 FragmentManager manager = getSupportFragmentManager();
                 fragment.show(manager, "");
@@ -58,7 +58,7 @@ public class CompaniesFormActivity extends AppCompatActivity implements DatePick
             public void onClick(View view) {
                 btnDatePickerId = view.getId();
                 DatePickerDialogFragment fragment = DatePickerDialogFragment.getInstance(
-                        CompaniesFormActivity.this, leavingAt.get(YEAR), leavingAt.get(MONTH),
+                        CompanyFormActivity.this, leavingAt.get(YEAR), leavingAt.get(MONTH),
                         leavingAt.get(DAY_OF_MONTH));
                 FragmentManager manager = getSupportFragmentManager();
                 fragment.show(manager, "");
@@ -74,7 +74,7 @@ public class CompaniesFormActivity extends AppCompatActivity implements DatePick
                 attrbutes.put("startAt", String.valueOf(startAt.getTimeInMillis()));
                 attrbutes.put("leavingAt", String.valueOf(leavingAt.getTimeInMillis()));
 
-                Company company = new Company(CompaniesFormActivity.this);
+                Company company = new Company(CompanyFormActivity.this);
                 company.setAttributes(attrbutes);
                 if (company.create()) {
                     Snackbar.make(view, "Empresa salva com sucesso", Snackbar.LENGTH_LONG)

@@ -5,11 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import static com.artes.alexbispo.kiponto.utils.DateUtils.DD_MM_YYYY;
+import static com.artes.alexbispo.kiponto.utils.DateUtils.format;
 
 /**
  * Created by alex on 06/03/17.
@@ -109,8 +110,7 @@ public class Company extends AbstractModel {
 
     @Override
     public String toString() {
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        return getName() + " - " + format.format(new Date(startAt)) + " - " + format.format(new Date(leavingAt));
+        return getName() + " - " + format(startAt, DD_MM_YYYY) + " - " + format(leavingAt, DD_MM_YYYY);
     }
 
     public List<Company> all(){
@@ -148,5 +148,26 @@ public class Company extends AbstractModel {
         db.insert(getTableName(), null, contentValues);
         close();
         return true;
+    }
+
+    public Company find(long company_id) {
+        String sql = "SELECT * FROM " + getTableName() + " WHERE id = ?;";
+        SQLiteDatabase db = getReadableDatabase();
+        String[] args = {String.valueOf(company_id)};
+
+        Cursor cursor = db.rawQuery(sql, args);
+        Company company = null;
+        if (cursor.moveToNext()){
+            company = new Company(this.context);
+            company.setId(cursor.getLong(cursor.getColumnIndex("id")));
+            company.setName(cursor.getString(cursor.getColumnIndex("name")));
+            company.setStartAt(cursor.getLong(cursor.getColumnIndex("start_at")));
+            company.setLeavingAt(cursor.getLong(cursor.getColumnIndex("leaving_at")));
+            company.setCreatedAt(cursor.getLong(cursor.getColumnIndex("created_at")));
+            company.setUpdatedAt(cursor.getLong(cursor.getColumnIndex("updated_at")));
+        }
+        cursor.close();
+        close();
+        return company;
     }
 }

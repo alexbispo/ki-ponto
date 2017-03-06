@@ -18,8 +18,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.CompaniesFormActivity"
-            android:label="Ki-Ponto - Empresa"></activity>
+        <activity
+            android:name=".activities.CompanyFormActivity"
+            android:label="Ki-Ponto - Empresa" />
+        <activity android:name=".activities.CompanyShowActivity"></activity>
     </application>
 
 </manifest>
