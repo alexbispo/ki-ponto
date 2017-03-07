@@ -110,7 +110,8 @@ public class Company extends AbstractModel {
 
     @Override
     public String toString() {
-        return getName() + " - " + format(startAt, DD_MM_YYYY) + " - " + format(leavingAt, DD_MM_YYYY);
+        String leavingTxt = leavingAt > 0 ? format(leavingAt, DD_MM_YYYY) : "hoje";
+        return getName() + " - " + format(startAt, DD_MM_YYYY) + " - " + leavingTxt;
     }
 
     public List<Company> all(){

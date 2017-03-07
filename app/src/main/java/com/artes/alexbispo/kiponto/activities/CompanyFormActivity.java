@@ -1,6 +1,7 @@
 package com.artes.alexbispo.kiponto.activities;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -18,9 +19,11 @@ import com.artes.alexbispo.kiponto.model.Company;
 import java.util.Calendar;
 import java.util.HashMap;
 
+import static com.artes.alexbispo.kiponto.utils.DateUtils.DD_MM_YYYY;
+import static com.artes.alexbispo.kiponto.utils.DateUtils.format;
 import static java.util.Calendar.*;
 
-public class CompanyFormActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class CompanyFormActivity extends AppCompatActivity implements DatePickerDialogFragment.Listener {
 
     private Button btnStartDate;
     private Button btnLeavingDate;
@@ -37,17 +40,19 @@ public class CompanyFormActivity extends AppCompatActivity implements DatePicker
         btnLeavingDate = (Button) findViewById(R.id.company_btn_leaving_date);
         FloatingActionButton fabCompanyCreate = (FloatingActionButton) findViewById(R.id.fab_company_create);
 
-        startAt = Calendar.getInstance();
-        leavingAt = Calendar.getInstance();
+//        startAt = Calendar.getInstance();
+//        leavingAt = Calendar.getInstance();
 
         btnStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 btnDatePickerId = view.getId();
 
+                Calendar c = startAt == null ? Calendar.getInstance() : startAt;
+
                 DatePickerDialogFragment fragment = DatePickerDialogFragment.getInstance(
-                        CompanyFormActivity.this, startAt.get(YEAR), startAt.get(MONTH),
-                            startAt.get(DAY_OF_MONTH));
+                        CompanyFormActivity.this, c.get(YEAR), c.get(MONTH),
+                            c.get(DAY_OF_MONTH));
                 FragmentManager manager = getSupportFragmentManager();
                 fragment.show(manager, "");
             }
@@ -57,9 +62,11 @@ public class CompanyFormActivity extends AppCompatActivity implements DatePicker
             @Override
             public void onClick(View view) {
                 btnDatePickerId = view.getId();
+                Calendar c = leavingAt == null ? Calendar.getInstance() : leavingAt;
+
                 DatePickerDialogFragment fragment = DatePickerDialogFragment.getInstance(
-                        CompanyFormActivity.this, leavingAt.get(YEAR), leavingAt.get(MONTH),
-                        leavingAt.get(DAY_OF_MONTH));
+                        CompanyFormActivity.this, c.get(YEAR), c.get(MONTH),
+                        c.get(DAY_OF_MONTH));
                 FragmentManager manager = getSupportFragmentManager();
                 fragment.show(manager, "");
             }
@@ -71,8 +78,8 @@ public class CompanyFormActivity extends AppCompatActivity implements DatePicker
                 EditText edtName = (EditText) findViewById(R.id.company_txt_name);
                 HashMap<String, String> attrbutes = new HashMap<>();
                 attrbutes.put("name", edtName.getText().toString());
-                attrbutes.put("startAt", String.valueOf(startAt.getTimeInMillis()));
-                attrbutes.put("leavingAt", String.valueOf(leavingAt.getTimeInMillis()));
+                if (startAt != null) attrbutes.put("startAt", String.valueOf(startAt.getTimeInMillis()));
+                if (leavingAt != null) attrbutes.put("leavingAt", String.valueOf(leavingAt.getTimeInMillis()));
 
                 Company company = new Company(CompanyFormActivity.this);
                 company.setAttributes(attrbutes);
@@ -91,18 +98,28 @@ public class CompanyFormActivity extends AppCompatActivity implements DatePicker
     }
 
     @Override
-    public void onDateSet(DatePicker view, int y, int m, int d) {
+    public void onSelectDate(int d, int m, int y) {
         Calendar c = Calendar.getInstance();
         c.set(y, m, d);
-        String sDate = c.get(DAY_OF_MONTH) + "/"
-                + (c.get(MONTH) + 1) + "/" + c.get(YEAR);
+//        String sDate = c.get(DAY_OF_MONTH) + "/"
+//                + (c.get(MONTH) + 1) + "/" + c.get(YEAR);
 
         if (R.id.company_btn_start_date == btnDatePickerId) {
-            btnStartDate.setText(sDate);
+            btnStartDate.setText(format(c.getTimeInMillis(), DD_MM_YYYY));
             startAt = c;
         } else if (R.id.company_btn_leaving_date == btnDatePickerId) {
-            btnLeavingDate.setText(sDate);
+            btnLeavingDate.setText(format(c.getTimeInMillis(), DD_MM_YYYY));
             leavingAt = c;
         }
+    }
+
+    @Override
+    public void onCancelSelectDate(DialogInterface dialog) {
+        if (R.id.company_btn_start_date == btnDatePickerId) {
+            btnStartDate.setText("Data de Início");
+        } else if (R.id.company_btn_leaving_date == btnDatePickerId){
+            btnLeavingDate.setText("Data de Saída");
+        }
+        dialog.cancel();
     }
 }

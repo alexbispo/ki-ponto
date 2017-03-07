@@ -14,19 +14,56 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/company_txt_name"
-            android:hint="Nome"/>
+            android:hint="Nome"
+            />
 
-        <Button
-            android:layout_width="wrap_content"
+        <TableLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/company_btn_start_date"
-            android:text="Data de Entrada"/>
+            android:stretchColumns="0,1">
 
-        <Button
-            android:layout_width="wrap_content"
+            <TableRow>
+                <TextView android:text="Saldo atual:" />
+            </TableRow>
+
+            <TableRow>
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/company_txt_current_balance_hour"
+                    android:inputType="number"
+                    android:hint="00 hrs"/>
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/company_txt_current_balance_min"
+                    android:inputType="number"
+                    android:hint="00 min"/>
+            </TableRow>
+
+        </TableLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/company_btn_leaving_date"
-            android:text="Data de Saída"/>
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/company_btn_start_date"
+                android:text="Data de Início"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/company_btn_leaving_date"
+                android:text="Data de Saída"/>
+
+        </LinearLayout>
+
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_company_create"
